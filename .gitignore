@@ -1,0 +1,7 @@
+node_modules
+dist
+dist-embed
+*.local
+.idea
+.vscode/*
+.claude/settings.local.json

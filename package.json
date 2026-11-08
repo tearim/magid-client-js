@@ -1,0 +1,36 @@
+{
+  "name": "@magiden/client-js",
+  "version": "0.1.0",
+  "description": "Framework-free browser client for the Magid storytelling server, on @magiden/client-core: the full app or a story embedded in any page element.",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tearim/magid-client-js.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:embed": "tsc && vite build --mode embed",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "~10.0.1",
+    "@types/node": "~24.13.2",
+    "eslint": "~10.5.0",
+    "globals": "~17.6.0",
+    "jsdom": "~29.1.1",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "~8.61.0",
+    "vite": "~8.0.16",
+    "vitest": "~4.1.8"
+  },
+  "dependencies": {
+    "@magiden/client-core": "^0.7.0"
+  }
+}

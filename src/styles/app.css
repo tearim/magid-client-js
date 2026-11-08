@@ -1,0 +1,1302 @@
+/* Generated from magid-client-rct's stylesheets (index.css + the CSS modules, classes prefixed mg-<component>-),
+   so both clients look the same. Everything applies inside a Magid root only. */
+
+/* Everything here applies inside a Magid root only (mountMagid's .magid-app-root), so it never styles an embedding
+   page; the full app's page-level rules are in app-page.css. */
+.magid-app-root, .magid-app-root *, .magid-app-root *::before, .magid-app-root *::after {
+  box-sizing: border-box;
+}
+
+.magid-app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Georgia', serif;
+  background: #0a0a14;
+  color: #e0e0e0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Embedded: the page decides the size; the story scrolls inside, overlays (fades, toasts) stay inside. */
+.magid-app-root.magid-embedded {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.magid-app-root.magid-embedded:focus {
+  outline: none;
+}
+
+.magid-embedded .magid-outer-background {
+  min-height: 100%;
+}
+
+/* Default Magid class names — servers may override these */
+.magid-response-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.magid-outer-background {
+  min-height: 100vh;
+  background: #0a0a14;
+}
+
+.magid-menu-textarea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.magid-menu-description {
+  line-height: 1.6;
+}
+
+.magid-menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.magid-default-narration {
+  margin: 0.5rem 0;
+  line-height: 1.7;
+}
+
+.magid-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.magid-default-image {
+  margin: 0.5rem 0;
+}
+
+.magid-narration-image {
+  display: block;
+}
+
+.magid-common-button {
+  padding: 0.5rem 1.25rem;
+  background: transparent;
+  border: 1px solid #666;
+  color: #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.magid-common-button:hover:not(:disabled) {
+  background: #1e1e3a;
+  border-color: #8888ff;
+  color: #fff;
+}
+
+.magid-common-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.magid-input-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.magid-input-element {
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+/* ---- App ---- */
+.mg-app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0a0a14;
+  color: #e0e0e0;
+  font-family: 'Georgia', serif;
+}
+
+.magid-embedded .mg-app-shell {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* Shown by the story-only chrome while there is nothing to render yet. */
+.mg-app-storyStatus {
+  padding: 1rem;
+  opacity: 0.7;
+}
+
+.mg-app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #111122;
+  border-bottom: 1px solid #333;
+  min-height: 44px;
+}
+
+.mg-app-headerRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mg-app-optionsBtn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #ccc;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.mg-app-optionsBtn:hover {
+  background: #222;
+  color: #fff;
+}
+
+.mg-app-statusMsg {
+  font-size: 0.8rem;
+  color: #aaa;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mg-app-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #444;
+  border-top-color: #8888ff;
+  border-radius: 50%;
+  animation: mg-spin 0.7s linear infinite;
+}
+
+@keyframes mg-spin {
+  to { transform: rotate(360deg); }
+}
+
+.mg-app-connDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #555;
+  flex-shrink: 0;
+}
+
+.mg-app-connDotOn {
+  background: #44cc44;
+}
+
+.mg-app-connectBtn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #ccc;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.mg-app-connectBtn:hover:not(:disabled) {
+  background: #222;
+  color: #fff;
+}
+
+.mg-app-connectBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mg-app-resetBtn {
+  background: transparent;
+  border: 1px solid #7a4a1a;
+  color: #c8884a;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.mg-app-resetBtn:hover:not(:disabled) {
+  background: #2a1a08;
+  color: #ffaa66;
+  border-color: #aa6622;
+}
+
+.mg-app-resetBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mg-app-endSessionBtn {
+  background: transparent;
+  border: 1px solid #7a1a1a;
+  color: #cc5555;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.mg-app-endSessionBtn:hover:not(:disabled) {
+  background: #2a0808;
+  color: #ff7777;
+  border-color: #aa2222;
+}
+
+.mg-app-endSessionBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mg-app-endSessionConfirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #cc7777;
+}
+
+.mg-app-endSessionYes {
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #aa2222;
+  background: #3a0808;
+  color: #ff8888;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.mg-app-endSessionYes:hover:not(:disabled) { background: #550a0a; }
+.mg-app-endSessionYes:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.mg-app-endSessionNo {
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: transparent;
+  color: #888;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.mg-app-endSessionNo:hover { background: #222; color: #ccc; }
+
+.mg-app-blockedBanner {
+  padding: 0.5rem 1rem;
+  background: #2a0a0a;
+  border-bottom: 1px solid #6a1a1a;
+  color: #ff9999;
+  font-size: 0.85rem;
+}
+
+.mg-app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---- MagidRoot ---- */
+.mg-root-responsePane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* ---- WelcomePage ---- */
+.mg-welcome-root {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.mg-welcome-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Geometric monogram */
+.mg-welcome-icon {
+  font-size: 4rem;
+  line-height: 1;
+  color: #3a3a7a;
+  text-shadow: 0 0 40px #4a4aff55, 0 0 80px #4a4aff22;
+  user-select: none;
+  animation: mg-breathe 4s ease-in-out infinite;
+}
+
+.mg-welcome-serverIcon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.mg-welcome-serverDesc {
+  color: #8a8aaa;
+  font-style: italic;
+}
+
+@keyframes mg-breathe {
+  0%, 100% { color: #3a3a7a; text-shadow: 0 0 40px #4a4aff44, 0 0 80px #4a4aff11; }
+  50%       { color: #5a5aaa; text-shadow: 0 0 40px #6a6aff88, 0 0 80px #4a4aff33; }
+}
+
+.mg-welcome-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #c8c8e8;
+  letter-spacing: 0.02em;
+}
+
+.mg-welcome-body {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #6a6a8a;
+  line-height: 1.65;
+}
+
+/* Inline key-like labels matching the header button style */
+.mg-welcome-key {
+  display: inline-block;
+  padding: 0.05rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid #3a3a6a;
+  background: #16163a;
+  color: #9090cc;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-style: normal;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+}
+
+.mg-welcome-key:hover {
+  background: #22225a;
+  border-color: #5a5aaa;
+  color: #bbbbff;
+}
+
+.mg-welcome-keyDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Warning line */
+.mg-welcome-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  text-align: left;
+  background: #16100a;
+  border: 1px solid #3a2a0a;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #7a6040;
+}
+
+.mg-welcome-warningIcon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: #7a6040;
+}
+
+/* ---- ServerLobbyPage ---- */
+.mg-lobby-root {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.mg-lobby-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Icon variants */
+.mg-lobby-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+.mg-lobby-iconGlyph {
+  font-size: 3.5rem;
+  line-height: 1;
+  color: #4a4a8a;
+  text-shadow: 0 0 40px #4a4aff55;
+  user-select: none;
+}
+
+/* Name + version row */
+.mg-lobby-nameRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.mg-lobby-name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #d8d8f0;
+  letter-spacing: 0.01em;
+}
+
+.mg-lobby-version {
+  font-size: 0.8rem;
+  color: #4a4a7a;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  background: #16163a;
+  border: 1px solid #2a2a5a;
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+}
+
+.mg-lobby-description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6a6a9a;
+  line-height: 1.6;
+}
+
+.mg-lobby-divider {
+  width: 60%;
+  border: none;
+  border-top: 1px solid #1e1e42;
+  margin: 0.25rem 0;
+}
+
+/* Story count */
+.mg-lobby-storyInfo {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6a6a9a;
+}
+
+.mg-lobby-storyCount {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #7070cc;
+  margin-right: 0.2rem;
+}
+
+.mg-lobby-noStories {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #4a4a6a;
+  font-style: italic;
+}
+
+/* Connect button */
+.mg-lobby-connectBtn {
+  margin-top: 0.5rem;
+  padding: 0.55rem 2rem;
+  background: #2a2a6a;
+  color: #aaaaf0;
+  border: 1px solid #4a4aaa;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mg-lobby-connectBtn:hover:not(:disabled) {
+  background: #3a3a8a;
+  color: #ccccff;
+}
+
+.mg-lobby-connectBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Hint when session is active */
+.mg-lobby-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #4a4a6a;
+}
+
+.mg-lobby-hint strong {
+  color: #6a6aaa;
+  font-weight: 600;
+}
+
+/* ---- ToastContainer ---- */
+.mg-toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Embedded: in the corner of the Magid area, not of the window. */
+.magid-embedded .mg-toast-container {
+  position: absolute;
+}
+
+.mg-toast-toast {
+  position: relative;
+  background: rgba(180, 60, 60, 0.92);
+  color: #fff;
+  padding: 0.65rem 1rem 1.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  max-width: 320px;
+  pointer-events: all;
+  cursor: pointer;
+  animation: mg-toastIn 0.3s ease-out;
+}
+
+.mg-toast-toastClosing {
+  animation: mg-toastOut 0.4s ease-in forwards;
+}
+
+.mg-toast-toastActions {
+  position: absolute;
+  right: 0.4rem;
+  bottom: 0.4rem;
+  display: flex;
+  gap: 0.15rem;
+}
+
+.mg-toast-iconBtn {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+}
+
+.mg-toast-iconBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.mg-toast-iconBtn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.mg-toast-iconBtnActive,
+.mg-toast-iconBtnActive:hover:not(:disabled) {
+  color: #ffd76a;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.mg-toast-iconBtn svg {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+.mg-toast-copiedGlyph {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+@keyframes mg-toastIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mg-toastOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-12px); }
+}
+
+/* ---- OptionsModal ---- */
+.mg-options-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.mg-options-modal {
+  background: #1a1a2e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  min-width: 360px;
+  max-width: 480px;
+  width: 100%;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mg-options-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.mg-options-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.mg-options-input {
+  padding: 0.375rem 0.5rem;
+  background: #0d0d1a;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 0.875rem;
+}
+
+.mg-options-input:focus {
+  outline: none;
+  border-color: #8888ff;
+}
+
+.mg-options-checkRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.mg-options-slider {
+  width: 100%;
+  cursor: pointer;
+}
+
+.mg-options-hint {
+  font-size: 0.75rem;
+  color: #999;
+  margin: 0;
+}
+
+.mg-options-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.mg-options-saveBtn {
+  padding: 0.4rem 1rem;
+  background: #4a4aff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.mg-options-saveBtn:hover {
+  background: #6060ff;
+}
+
+.mg-options-cancelBtn {
+  padding: 0.4rem 1rem;
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.mg-options-cancelBtn:hover {
+  color: #fff;
+  border-color: #888;
+}
+
+.mg-options-statsBtn {
+  padding: 0.4rem 1rem;
+  background: transparent;
+  color: #7a7aff;
+  border: 1px solid #3a3a8a;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin-right: auto;
+}
+
+.mg-options-statsBtn:hover {
+  background: #1a1a4a;
+  border-color: #5a5aaa;
+}
+
+.mg-options-xmlLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mg-options-refreshBtn {
+  padding: 0.1rem 0.4rem;
+  font-size: 0.8rem;
+  background: transparent;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+}
+.mg-options-refreshBtn:hover:not(:disabled) { color: #ccc; border-color: #777; }
+.mg-options-refreshBtn:disabled { opacity: 0.4; cursor: default; }
+
+.mg-options-xmlRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.mg-options-xmlRow .mg-options-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.mg-options-armBtn {
+  padding: 0.375rem 0.75rem;
+  background: #2a6a2a;
+  color: #e0e0e0;
+  border: 1px solid #4a9a4a;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mg-options-armBtn:hover:not(:disabled) {
+  background: #3a8a3a;
+}
+
+.mg-options-armBtn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---- ServerStatsDashboard ---- */
+/* ── Colour tokens ─────────────────────────────────────────────────────── */
+.mg-stats-overlay { --ok:   #4caf50; --warn: #ffc107; --high: #ff9800; --crit: #f44336; }
+
+/* ── Full-screen overlay ────────────────────────────────────────────────── */
+.mg-stats-overlay {
+  position: fixed;
+  inset: 0;
+  background: #090916;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: inherit;
+  color: #dde0ee;
+}
+
+/* ── Top bar ────────────────────────────────────────────────────────────── */
+.mg-stats-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.25rem;
+  height: 52px;
+  background: #10102a;
+  border-bottom: 1px solid #22224a;
+  flex-shrink: 0;
+}
+
+.mg-stats-titleIcon {
+  font-size: 1.1rem;
+  color: #6a6aff;
+}
+
+.mg-stats-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  flex: 1;
+  letter-spacing: 0.03em;
+}
+
+/* Animated pulse dot while fetching */
+.mg-stats-pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6a6aff;
+  animation: mg-pulseFade 0.9s ease-in-out infinite alternate;
+}
+@keyframes mg-pulseFade {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0.3; transform: scale(0.7); }
+}
+
+/* Poll interval pills */
+.mg-stats-pollGroup {
+  display: flex;
+  gap: 3px;
+}
+
+.mg-stats-pollBtn {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #33335a;
+  background: transparent;
+  color: #888aaa;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.mg-stats-pollBtn:hover { background: #1e1e48; color: #ccc; }
+.mg-stats-pollBtnActive {
+  background: #2a2a6a;
+  color: #8888ff;
+  border-color: #4a4aaa;
+}
+
+.mg-stats-refreshBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #33335a;
+  background: transparent;
+  color: #888aaa;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.mg-stats-refreshBtn:hover:not(:disabled) { background: #1e1e48; color: #ccc; }
+.mg-stats-refreshBtn:disabled { opacity: 0.35; cursor: default; }
+
+.mg-stats-closeBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #33335a;
+  background: transparent;
+  color: #888aaa;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.mg-stats-closeBtn:hover { background: #3a1a1a; color: #ff8888; border-color: #662222; }
+
+/* ── Scrollable content ─────────────────────────────────────────────────── */
+.mg-stats-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Error banner ───────────────────────────────────────────────────────── */
+.mg-stats-errorBanner {
+  background: #2a0a0a;
+  border: 1px solid #6a1a1a;
+  color: #ff8888;
+  border-radius: 6px;
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* ── Stat cards ─────────────────────────────────────────────────────────── */
+.mg-stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.mg-stats-card {
+  background: #13132e;
+  border: 1px solid #22224a;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mg-stats-cardLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5a5a8a;
+  font-weight: 600;
+}
+
+.mg-stats-cardValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #dde0ee;
+}
+
+.mg-stats-cardOf {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #5a5a8a;
+}
+
+.mg-stats-cardSub {
+  font-size: 0.75rem;
+  color: #5a5a8a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Capacity bar */
+.mg-stats-capBar {
+  height: 4px;
+  border-radius: 2px;
+  background: #1e1e42;
+  margin: 0.35rem 0 0.1rem;
+  overflow: hidden;
+}
+
+.mg-stats-capFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Colour utility classes */
+.mg-stats-ok   { color: var(--ok);   background-color: var(--ok);   }
+.mg-stats-warn { color: var(--warn); background-color: var(--warn); }
+.mg-stats-high { color: var(--high); background-color: var(--high); }
+.mg-stats-crit { color: var(--crit); background-color: var(--crit); }
+
+/* For text nodes we override background */
+.mg-stats-cardValue.mg-stats-ok   { color: var(--ok);   background: none; }
+.mg-stats-cardValue.mg-stats-warn { color: var(--warn); background: none; }
+.mg-stats-cardValue.mg-stats-high { color: var(--high); background: none; }
+.mg-stats-cardValue.mg-stats-crit { color: var(--crit); background: none; }
+
+/* capFill uses background-color only */
+.mg-stats-capFill.mg-stats-ok   { color: unset; }
+.mg-stats-capFill.mg-stats-warn { color: unset; }
+.mg-stats-capFill.mg-stats-high { color: unset; }
+.mg-stats-capFill.mg-stats-crit { color: unset; }
+
+/* ── Sections ───────────────────────────────────────────────────────────── */
+.mg-stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mg-stats-sectionTitle {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #4a4a7a;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mg-stats-sectionCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #22225a;
+  color: #9090cc;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.mg-stats-empty {
+  color: #4a4a7a;
+  font-size: 0.875rem;
+  padding: 1rem 0;
+}
+
+/* ── Key-value grid (extra header fields) ──────────────────────────────── */
+.mg-stats-kvGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.4rem;
+}
+
+.mg-stats-kvRow {
+  display: flex;
+  gap: 0.75rem;
+  background: #13132e;
+  border: 1px solid #1e1e42;
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+
+.mg-stats-kvKey {
+  color: #5a5a8a;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mg-stats-kvVal {
+  color: #aab0cc;
+  word-break: break-all;
+}
+
+/* ── Sessions table ─────────────────────────────────────────────────────── */
+.mg-stats-tableWrap {
+  overflow-x: auto;
+  border: 1px solid #1e1e42;
+  border-radius: 8px;
+}
+
+.mg-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.mg-stats-table thead tr {
+  background: #10102a;
+  border-bottom: 1px solid #22224a;
+}
+
+.mg-stats-table th {
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4a4a7a;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mg-stats-table tbody tr {
+  border-bottom: 1px solid #14143a;
+  transition: background 0.1s;
+}
+
+.mg-stats-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.mg-stats-table tbody tr:hover {
+  background: #13132e;
+}
+
+.mg-stats-table td {
+  padding: 0.6rem 0.9rem;
+  color: #bbbdcc;
+  vertical-align: middle;
+}
+
+.mg-stats-hashChip {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #6a6aff;
+  background: #16163a;
+  border: 1px solid #2a2a5a;
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  letter-spacing: 0.05em;
+}
+
+.mg-stats-filepath {
+  color: #9090cc;
+  cursor: default;
+}
+
+.mg-stats-badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.mg-stats-badgeAdmin {
+  background: #2a1a3a;
+  color: #cc88ff;
+  border: 1px solid #4a2a6a;
+}
+
+.mg-stats-badgeUser {
+  background: #0e1e2a;
+  color: #5090aa;
+  border: 1px solid #1a3a4a;
+}
+
+.mg-stats-badgeShort {
+  background: #2a1a0a;
+  color: #ffaa44;
+  border: 1px solid #6a3a0a;
+}
+
+.mg-stats-muted {
+  color: #3a3a6a;
+}
+
+.mg-stats-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #8a8aaa;
+}
+
+/* ── Session row — current user ─────────────────────────────────────────── */
+.mg-stats-myRow {
+  background: #10102e;
+}
+
+.mg-stats-meBadge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: #2a2a6a;
+  color: #8888ff;
+  border: 1px solid #4a4aaa;
+  vertical-align: middle;
+}
+
+/* ── End-session controls ────────────────────────────────────────────────── */
+.mg-stats-actionCell {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.mg-stats-endSessionBtn {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  border-radius: 4px;
+  border: 1px solid #6a1a1a;
+  background: transparent;
+  color: #cc5555;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.mg-stats-endSessionBtn:hover {
+  background: #2a0808;
+  color: #ff7777;
+  border-color: #aa2222;
+}
+
+.mg-stats-confirmInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  color: #cc7777;
+}
+
+.mg-stats-confirmYes {
+  padding: 0.15rem 0.5rem;
+  font-size: 0.72rem;
+  border-radius: 4px;
+  border: 1px solid #aa2222;
+  background: #3a0808;
+  color: #ff8888;
+  cursor: pointer;
+}
+.mg-stats-confirmYes:hover:not(:disabled) { background: #550a0a; }
+.mg-stats-confirmYes:disabled { opacity: 0.5; cursor: default; }
+
+.mg-stats-confirmNo {
+  padding: 0.15rem 0.5rem;
+  font-size: 0.72rem;
+  border-radius: 4px;
+  border: 1px solid #33335a;
+  background: transparent;
+  color: #8888aa;
+  cursor: pointer;
+}
+.mg-stats-confirmNo:hover:not(:disabled) { background: #1a1a3a; }
+.mg-stats-confirmNo:disabled { opacity: 0.5; cursor: default; }
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.mg-stats-footer {
+  font-size: 0.72rem;
+  color: #3a3a6a;
+  text-align: right;
+  padding-bottom: 0.5rem;
+}
+
+/* ---- magid-client-js only ---- */
+/* Elements hidden with the `hidden` attribute stay hidden, whatever display their class sets. */
+.magid-app-root [hidden] {
+  display: none !important;
+}
+
+/* The story part of the Options dialog (a React fragment in magid-client-rct). */
+.mg-options-storySection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}

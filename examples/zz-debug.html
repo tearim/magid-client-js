@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magid embedded in a page</title>
+  <!-- A host page with deliberately aggressive CSS: none of it may reach Magid, and none of Magid's or the story's CSS
+       may reach this page. Query: ?server=…&story=…&isolation=none&fullscreen=element&chrome=full&height=…&built
+       (?built loads ../dist-embed/magid-embed.js from `npm run build:embed` instead of the sources; serve the
+       repository root statically for that). -->
+  <style>
+    :root { --primary-text: magenta; }
+    body { margin: 0; background: #fffbe6; color: #333; font: 18px/1.5 "Comic Sans MS", cursive; }
+    * { letter-spacing: 0.05em; }
+    div { outline: 1px dashed #c00; }
+    button { background: hotpink !important; color: #000; border-radius: 0; }
+    p { max-width: 60ch; }
+    header, footer { padding: 1rem 2rem; background: #ffe08a; }
+    main { padding: 1rem 2rem; }
+    #story { height: 520px; max-width: 900px; border: 4px solid #333; margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <header><strong>The Host Page</strong> — a page that isn't Magid's own.</header>
+  <main>
+    <p>Text above the story. The section below holds Magid; everything around it belongs to the host page.</p>
+    <section id="story"></section>
+    <p>Text below the story. It stays in Comic Sans on a cream background, whatever the story's CSS says.</p>
+    <button id="unmount" type="button">Unmount Magid</button>
+  </main>
+  <footer>Host footer</footer>
+
+  <script type="module">
+    const q = new URLSearchParams(location.search);
+    const entry = q.has('built') ? '../dist-embed/magid-embed.js' : '/src/index.ts';
+    const { mountMagid } = await import(/* @vite-ignore */ entry);
+    const options = { baseUrl: q.get('server') ?? 'http://localhost:8090' };
+    for (const key of ['story', 'isolation', 'fullscreen', 'chrome']) if (q.has(key)) options[key] = q.get(key);
+    if (q.has('height')) document.getElementById('story').style.height = q.get('height');
+    const magid = mountMagid(document.getElementById('story'), options);
+    document.getElementById('unmount').addEventListener('click', () => magid.unmount());
+  </script>
+<script>setTimeout(() => {
+  const r = performance.getEntriesByType("resource").filter((e) => e.name.includes(":8090/?")).map((e) => decodeURIComponent(e.name.split("?")[1]).replace(/freshness-key=[^&]*&?/, "").slice(0, 120) + " @" + Math.round(e.startTime));
+  const pre = document.createElement("pre"); pre.id = "dbg"; pre.textContent = JSON.stringify(r, null, 1); document.body.appendChild(pre);
+}, 38000);</script></body>
+</html>
