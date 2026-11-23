@@ -10,6 +10,7 @@ import { PREF_KEYS } from '../prefs';
 import { childCtx, watch, watchAll, watchImpliedClasses, type Ctx } from './common';
 import { renderCommandButton } from './command';
 import { renderDetached } from './detached';
+import { streamRenderer } from './stream';
 
 // A menu: its description (typed like a narration; `by-anchor` detached elements at their anchors, `prepend` ones
 // before it, `append` ones once it is fully shown), `menu-css`, background music, and the choices as buttons.
@@ -61,6 +62,7 @@ function renderDescription(
     }
     return anchored.get(anchor) ?? null;
   };
+  const streamAt = streamRenderer(ctx);
 
   const skip = magid.prefs.getBoolean(PREF_KEYS.NARRATION_IGNORE_TEXT_TL);
   let menuClass: string | undefined;
@@ -74,7 +76,7 @@ function renderDescription(
   const render = () => {
     replaceChildren(desc,
       ...prepended,
-      renderHtml(truncateHtml(nodes, visible.length), (text) => renderWithBreaks(text), nodeAt),
+      renderHtml(truncateHtml(nodes, visible.length), (text) => renderWithBreaks(text), nodeAt, streamAt),
       // Append elements wait for the whole description.
       ...(visible === clean ? appended : []),
     );

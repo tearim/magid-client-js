@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import type { MenuResponse, ParsedElement } from '@magiden/client-core';
+import { streamPlaceholder, type MenuResponse, type ParsedElement } from '@magiden/client-core';
 import { PREF_KEYS } from '../prefs';
 import { testCtx } from '../test/helpers';
 import { renderMenu } from './menu';
 import { renderMagidRoot } from './root';
+import { renderNarration } from './narration';
 
 const narration = (text: string, extra: object = {}): ParsedElement => ({ type: 'narration', data: { text, ...extra } }) as ParsedElement;
 
@@ -124,6 +125,66 @@ describe('renderers', () => {
 
       vi.advanceTimersByTime(200);
       expect(send).toHaveBeenCalledWith('update-symbol');
+    });
+  });
+  describe('streamed texts', () => {
+    const ID = 'str-1';
+    const delta = (no: number, text: string) => ctx.magid.client.applyStreamMessage({ 'stream-id': ID, no, delta: text });
+    const done = (value: string, status: string) =>
+      ctx.magid.client.applyStreamMessage({ 'stream-id': ID, done: true, status, value });
+    const streamSpan = () => ctx.root.querySelector('.magid-stream');
+    const showNarration = (text: string) => ctx.root.appendChild(renderNarration(ctx, { narration: text }));
+
+    it('shows nothing in place of a stream nothing has arrived of', () => {
+      showNarration(`He says: ${streamPlaceholder(ID)}`);
+      expect(ctx.root.textContent).toBe('He says: ');
+    });
+
+    it('shows a stream text in a narration', () => {
+      showNarration(`He says: ${streamPlaceholder(ID)}`);
+      delta(1, 'Good evening');
+      expect(ctx.root.textContent).toBe('He says: Good evening');
+    });
+
+    it('keeps a stream text current', () => {
+      showNarration(`He says: ${streamPlaceholder(ID)}`);
+      delta(1, 'Good ');
+      delta(2, 'evening');
+      expect(ctx.root.textContent).toBe('He says: Good evening');
+    });
+
+    it('keeps the stream element while a typed text re-renders', () => {
+      ctx.root.appendChild(renderNarration(ctx, { narration: `${streamPlaceholder(ID)}DCSTP_300@ and more`, class: 'type-by-letter-20' }));
+      delta(1, 'Hi');
+      vi.advanceTimersByTime(50);
+      const first = streamSpan();
+      expect(first).not.toBeNull(); // precondition: the typewriter has reached the stream
+      vi.advanceTimersByTime(2000);
+      expect([streamSpan(), ctx.root.textContent]).toEqual([first, 'Hi and more']);
+    });
+
+    it('marks a running stream as open', () => {
+      showNarration(streamPlaceholder(ID));
+      delta(1, 'Good ');
+      expect(streamSpan()?.className).toBe('magid-stream magid-stream-open');
+    });
+
+    it('marks an ended stream with its status', () => {
+      showNarration(streamPlaceholder(ID));
+      done('The butler says nothing.', 'failed');
+      expect([streamSpan()?.className, ctx.root.textContent]).toEqual(['magid-stream magid-stream-failed', 'The butler says nothing.']);
+    });
+
+    it('inserts a stream text as text, never as markup', () => {
+      showNarration(streamPlaceholder(ID));
+      delta(1, '<b>bold</b>');
+      expect([ctx.root.querySelector('b'), ctx.root.textContent]).toEqual([null, '<b>bold</b>']);
+    });
+
+    it('shows a stream text in a menu description', () => {
+      ctx.root.appendChild(renderMenu(ctx, { 'menu-name': 'hall', 'menu-description': `A voice: ${streamPlaceholder(ID)}`, 'menu-options': [] } as MenuResponse));
+      delta(1, 'Welcome.');
+      expect(ctx.root.querySelector('.magid-menu-description')?.textContent).toBe('A voice: Welcome.');
     });
   });
 });

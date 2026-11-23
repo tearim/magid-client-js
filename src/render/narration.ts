@@ -10,6 +10,7 @@ import { PREF_KEYS } from '../prefs';
 import { childCtx, deferMsOf, watchAll, watchImpliedClasses, type Ctx } from './common';
 import { renderDetached } from './detached';
 import { renderMagidImage } from './image';
+import { streamRenderer } from './stream';
 
 function typingStyleOf(className: string | undefined): TypingStyle | undefined {
   const config = getConsequentalTypingConfig(className);
@@ -51,6 +52,7 @@ function buildNarration(ctx: Ctx, data: NarrationResponse, onComplete?: () => vo
     }
     return anchored.get(anchor) ?? null;
   };
+  const streamAt = streamRenderer(ctx);
 
   let className: string | undefined;
   let nodes: HtmlNode[] = [];
@@ -71,6 +73,7 @@ function buildNarration(ctx: Ctx, data: NarrationResponse, onComplete?: () => vo
         ? renderWithBreaks(text, typingStyle, animationResets)
         : renderWithBreaks(text),
       nodeAt,
+      streamAt,
     ));
   };
 

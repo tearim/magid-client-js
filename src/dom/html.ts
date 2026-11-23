@@ -5,10 +5,12 @@ import { setStyle } from './h';
 // `renderText` renders each text node; `isLast` marks the last one, where a typewriter's reveal edge is.
 // `renderAnchor` returns what belongs at an anchor (a detached element); return the same node every time, so an input
 // keeps its state while the text around it is re-rendered.
+// `renderStream` returns what belongs at a stream node (render/stream.ts); the same node every time, too.
 export function renderHtml(
   nodes: HtmlNode[],
   renderText: (text: string, isLast: boolean) => Node,
   renderAnchor?: (anchor: string) => Node | null,
+  renderStream?: (id: string) => Node | null,
 ): DocumentFragment {
   let textNodesLeft = countTextNodes(nodes);
   const render = (list: HtmlNode[], parent: Node): void => {
@@ -19,6 +21,9 @@ export function renderHtml(
       } else if (node.type === 'anchor') {
         const anchored = renderAnchor?.(node.anchor);
         if (anchored) parent.appendChild(anchored);
+      } else if (node.type === 'stream') {
+        const streamed = renderStream?.(node.id);
+        if (streamed) parent.appendChild(streamed);
       } else {
         const el = document.createElement(node.tag);
         for (const [name, value] of Object.entries(node.attributes)) {
@@ -37,6 +42,6 @@ export function renderHtml(
 
 function countTextNodes(nodes: HtmlNode[]): number {
   let n = 0;
-  for (const node of nodes) n += node.type === 'text' ? 1 : node.type === 'anchor' ? 0 : countTextNodes(node.children);
+  for (const node of nodes) n += node.type === 'text' ? 1 : node.type === 'element' ? countTextNodes(node.children) : 0;
   return n;
 }
