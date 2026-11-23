@@ -163,16 +163,28 @@ describe('renderers', () => {
       expect([streamSpan(), ctx.root.textContent]).toEqual([first, 'Hi and more']);
     });
 
-    it('marks a running stream as open', () => {
+    it('marks a stream nothing has arrived of as warming up', () => {
       showNarration(streamPlaceholder(ID));
-      delta(1, 'Good ');
-      expect(streamSpan()?.className).toBe('magid-stream magid-stream-open');
+      expect(streamSpan()?.className).toBe('magid-stream magid-stream-warming-up');
     });
 
-    it('marks an ended stream with its status', () => {
+    it('shows a warm-up message as warming up', () => {
+      showNarration(streamPlaceholder(ID));
+      ctx.magid.client.applyStreamMessage({ 'stream-id': ID, no: 0, snapshot: 'The wizard ponders…', 'warm-up': true });
+      expect([streamSpan()?.className, ctx.root.textContent]).toEqual(['magid-stream magid-stream-warming-up', 'The wizard ponders…']);
+    });
+
+    it('marks a stream as receiving once its text arrives', () => {
+      showNarration(streamPlaceholder(ID));
+      delta(1, 'Good ');
+      expect(streamSpan()?.className).toBe('magid-stream magid-stream-receiving');
+    });
+
+    it('marks an ended stream as finished, with its status', () => {
       showNarration(streamPlaceholder(ID));
       done('The butler says nothing.', 'failed');
-      expect([streamSpan()?.className, ctx.root.textContent]).toEqual(['magid-stream magid-stream-failed', 'The butler says nothing.']);
+      expect([streamSpan()?.className, ctx.root.textContent])
+        .toEqual(['magid-stream magid-stream-finished magid-stream-failed', 'The butler says nothing.']);
     });
 
     it('inserts a stream text as text, never as markup', () => {

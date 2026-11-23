@@ -56,8 +56,7 @@ npm 10.8.1 crashes resolving vitest's peer dependencies in a fresh install (`edg
 - `render/`: the story. `root.ts` (`renderMagidRoot`, `renderElement`, the narration queue and blocking visuals, as
   rct's MagidRoot/ResponsesContainer), `narration.ts`, `menu.ts`, `command.ts`, `image.ts`, `visual.ts`,
   `detached.ts` (`DETACHED_ELEMENT_RENDERERS`, `INPUT_TYPES`: add new types there), `stream.ts` (streamed texts: the
-  core's `stream` nodes as one reused span per stream, plain text kept current from `state.streams`; classes as rct's
-  `StreamText`; the instance's client runs with `streams: true` and `dispose()` closes the connection). Typed texts re-render their DOM on
+  core's `stream` nodes as one reused span per stream, plain text kept current from `state.streams`; classes from the core's `streamClassName`, as rct's `StreamText`; the instance's client runs with `streams: true` and `dispose()` closes the connection). Typed texts re-render their DOM on
   every typing step; detached elements and images are built once and reused, so inputs keep focus and state.
 - `ui/`: the app around the story: `app.ts` (shell, header, screens, startup, story-only chrome), `pages.ts` (welcome,
   lobby), `options.ts`, `stats.ts`, `toasts.ts`. The screen is rebuilt per batch of elements (the core clears them while

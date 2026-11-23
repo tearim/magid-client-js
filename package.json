@@ -31,6 +31,6 @@
     "vitest": "~4.1.8"
   },
   "dependencies": {
-    "@magiden/client-core": "^0.9.0"
+    "@magiden/client-core": "^0.9.1"
   }
 }
